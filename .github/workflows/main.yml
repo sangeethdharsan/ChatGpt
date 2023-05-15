@@ -1,16 +1,19 @@
+name: Code Review
+
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
+  issue_comment:
+    types: [created, edited]
 
 jobs:
-  hello_world_job:
+  code-review:
     runs-on: ubuntu-latest
-    name: ChatGPT explain code
     steps:
-      - name: ChatGTP explain code
-        uses: cirolini/chatgpt-github-actions@v1.3
-        with:
-          openai_api_key: ${{ secrets.OPENAI_TOKEN }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_pr_id: ${{ github.event.number }}
-
+    - name: OpenAI ChatGPT Code Review
+      with:
+        PROGRAMMING_LANGUAGE: 'JavaScript'
+        OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        FULL_REVIEW_COMMENT: 'chatgpt'
+        REVIEW_COMMENT_PREFIX: 'chatgpt:'
