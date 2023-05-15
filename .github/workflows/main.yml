@@ -1,19 +1,15 @@
-name: Code Review
-
 on:
-  issue_comment:
-    types: [created, edited]
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
-  code-review:
+  hello_world_job:
     runs-on: ubuntu-latest
-    if: github.event.comment.user.login == 'adshao' && startsWith(github.event.comment.body, 'chatgpt')
+    name: ChatGPT explain code
     steps:
-    - name: OpenAI ChatGPT Code Review
-      uses: adshao/chatgpt-code-review-action@v0.2
-      with:
-        PROGRAMMING_LANGUAGE: 'PHP'
-        OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FULL_REVIEW_COMMENT: 'chatgpt'
-        REVIEW_COMMENT_PREFIX: 'chatgpt:' 
+      - name: ChatGTP explain code
+        uses: cirolini/chatgpt-github-actions@v1.3
+        with:
+          openai_api_key: ${{ secrets.OPENAI_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_pr_id: ${{ github.event.number }}
