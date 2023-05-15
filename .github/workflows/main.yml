@@ -1,17 +1,19 @@
-name: Super-Linter
+name: Code Review
 
-on: push
+on:
+  issue_comment:
+    types: [created, edited]
 
 jobs:
-  super-lint:
-    name: Lint code base
+  code-review:
     runs-on: ubuntu-latest
+    if: github.event.comment.user.login == 'adshao' && startsWith(github.event.comment.body, 'chatgpt')
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: OpenAI ChatGPT Code Review
+      uses: adshao/chatgpt-code-review-action@v0.2
+      with:
+        PROGRAMMING_LANGUAGE: 'PHP'
+        OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FULL_REVIEW_COMMENT: 'chatgpt'
+        REVIEW_COMMENT_PREFIX: 'chatgpt:' 
