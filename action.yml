@@ -39,4 +39,4 @@ ${answer}'
 
 
 runs:
-      using: composite
+      using: 'composite'
