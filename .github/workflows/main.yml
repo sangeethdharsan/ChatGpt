@@ -12,7 +12,7 @@ jobs:
     steps:
     - name: OpenAI ChatGPT Code Review
       with:
-        PROGRAMMING_LANGUAGE: 'JavaScript'
+        PROGRAMMING_LANGUAGE: 'PHP'
         OPENAI_TOKEN: ${{ secrets.OPENAI_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         FULL_REVIEW_COMMENT: 'chatgpt'
